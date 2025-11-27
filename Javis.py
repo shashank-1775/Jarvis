@@ -45,12 +45,12 @@ def takeCommand():
 
 
 def openapp(query):
-    dict_app = {'vscode': r'C:\Users\shreyas\Desktop\Visual Studio Code.lnk',
-                'spotify': r'C:\Users\shreyas\Desktop\Spotify.lnk'}
+    dict_app = {'vscode': 'C:\Users\nawaz\Desktop\Visual Studio Code.lnk',
+                'spotify': 'C:\Users\nawaz\Desktop\Spotify.lnk'}
     a = query.replace('open', '').strip()
     for name, path in dict_app.items():
         if a in name:
-            os.startfile(path)
+            os.startfile(rf'{path}')
 
 
 if __name__ == "__main__":
@@ -73,8 +73,9 @@ if __name__ == "__main__":
         elif 'play' in query:
             video = query.replace('play', '').strip()
             speak(f'Playing {video} on YouTube')
-            webbrowser.open(f'https://www.youtube.com/results?search_query={video}')
-
+            results = YoutubeSearch(video, max_results=1).to_dict()
+            video_id = results[0]['id']
+            webbrowser.open(f'https://www.youtube.com/watch?v={video_id}')
         elif 'stop' in query or 'exit' in query or 'quit' in query or 'good night' in query:
             speak("Goodbye Sir. Have a nice day.")
             break
